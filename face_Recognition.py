@@ -19,7 +19,7 @@ import matplotlib.pyplot as plt
 IMAGE_SIZE = [224, 224]
 
 train_path = 'Datasets/Train'
-valid_path = 'Datasets/Test'
+valid_path = 'Datasets/Test'          # ----------------------------------------------------------------------------------------------------------
 
 # add preprocessing layer to the front of VGG
 vgg = VGG16(input_shape=IMAGE_SIZE + [3], weights='imagenet', include_top=False)
@@ -33,10 +33,8 @@ for layer in vgg.layers:
   # useful for getting number of classes
 folders = glob('Datasets/Train/*')
   
-
 # our layers - you can add more if you want
 x = Flatten()(vgg.output)
-# x = Dense(1000, activation='relu')(x)
 prediction = Dense(len(folders), activation='softmax')(x)
 
 # create a model object
@@ -60,7 +58,7 @@ train_datagen = ImageDataGenerator(rescale = 1./255,
                                    zoom_range = 0.2,
                                    horizontal_flip = True)
 
-test_datagen = ImageDataGenerator(rescale = 1./255)
+test_datagen = ImageDataGenerator(rescale = 1./255)  # ----------------------------------------------------------------------------------------------------------
 
 training_set = train_datagen.flow_from_directory('Datasets/Train',
                                                  target_size = (224, 224),
@@ -70,7 +68,7 @@ training_set = train_datagen.flow_from_directory('Datasets/Train',
 test_set = test_datagen.flow_from_directory('Datasets/Test',
                                             target_size = (224, 224),
                                             batch_size = 32,
-                                            class_mode = 'categorical')
+                                            class_mode = 'categorical')  # ----------------------------------------------------------------------------------------------------------
 
 '''r=model.fit_generator(training_set,
                          samples_per_epoch = 8000,
@@ -85,7 +83,7 @@ r = model.fit_generator(
   epochs=5,
   steps_per_epoch=len(training_set),
   validation_steps=len(test_set)
-)
+)  
 # loss
 plt.plot(r.history['loss'], label='train loss')
 plt.plot(r.history['val_loss'], label='val loss')
